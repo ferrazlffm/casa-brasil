@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Hammer, 
-  Truck, 
-  ShieldCheck, 
-  Clock, 
-  MapPin, 
-  Phone, 
-  ArrowRight, 
-  Menu, 
+import {
+  Hammer,
+  Truck,
+  ShieldCheck,
+  Clock,
+  MapPin,
+  Phone,
+  ArrowRight,
+  Menu,
   X,
   Star,
   Quote,
@@ -33,6 +33,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export default function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const bentoRef = useRef<HTMLDivElement>(null);
@@ -49,18 +50,18 @@ export default function App() {
         ease: 'power4.out',
         stagger: 0.2
       })
-      .from('.hero-sub', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out'
-      }, '-=0.6')
-      .from('.hero-cta', {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'back.out(1.7)'
-      }, '-=0.4');
+        .from('.hero-sub', {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out'
+        }, '-=0.6')
+        .from('.hero-cta', {
+          scale: 0.8,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'back.out(1.7)'
+        }, '-=0.4');
 
       // Scroll Reveals
       gsap.utils.toArray('.reveal').forEach((elem: any) => {
@@ -78,10 +79,10 @@ export default function App() {
       });
 
       // Bento Grid Animation
-      gsap.fromTo('.bento-item', 
-        { 
-          y: 100, 
-          opacity: 0 
+      gsap.fromTo('.bento-item',
+        {
+          y: 100,
+          opacity: 0
         },
         {
           y: 0,
@@ -96,6 +97,16 @@ export default function App() {
           }
         }
       );
+
+      // Partnership Image Animation (Zoom, Fade, Grayscale)
+      gsap.to('.partnership-img', {
+        scale: 1.1,
+        filter: 'grayscale(10%)',
+        duration: 18,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
     });
 
     return () => ctx.revert();
@@ -104,39 +115,65 @@ export default function App() {
   return (
     <div className="min-h-screen bg-brand-blue selection:bg-brand-yellow selection:text-brand-blue">
       {/* HEADER */}
-      <header 
+      <header
         ref={headerRef}
         className="fixed top-0 left-0 w-full z-50 glass py-4 px-6 md:px-12 flex items-center justify-between"
       >
         <div className="flex items-center gap-3">
-          <img 
-            src="https://instagram.fguj2-1.fna.fbcdn.net/v/t51.2885-19/416085363_686730583528904_1869603727862051298_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MjEuYzIifQ&_nc_ht=instagram.fguj2-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QHFvA3Cr8XMQtBIsGTX9u2IDbuH3NGGUwoxAzjpAAyd4JkBLQHFBrOMn4JD32dB2WyWzMH3uN6DN9Y8k38w-zUp&_nc_ohc=J8cqJ35Zl-8Q7kNvwFLtdfW&_nc_gid=OrI8h41R4uXYO3EAOSjLXg&edm=ADDLYBMBAAAA&ccb=7-5&oh=00_AfxCyxQJUAYp4ttIcvPo_dlosUqSRciFAHdjZf06pobyRQ&oe=69B0FB42&_nc_sid=56bdfd" 
-            alt="Casa Brasil Logo" 
+          <img
+            src="/logo.jpg"
+            alt="Casa Brasil Logo"
             className="h-10 w-10 rounded-lg object-cover border border-white/10"
             referrerPolicy="no-referrer"
           />
-          <span className="font-display font-bold text-xl tracking-tighter text-white">
+          <span className="font-display font-bold text-xl md:text-2xl tracking-tighter text-white">
             CASA <span className="text-brand-yellow">BRASIL</span>
           </span>
         </div>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-white/80">
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-white/80">
           <a href="#home" className="hover:text-brand-yellow transition-colors">Início</a>
           <a href="#diferenciais" className="hover:text-brand-yellow transition-colors">Diferenciais</a>
           <a href="#sobre" className="hover:text-brand-yellow transition-colors">Sobre Nós</a>
           <a href="#servicos" className="hover:text-brand-yellow transition-colors">Serviços</a>
         </nav>
 
-        <button className="bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95">
-          ORÇAMENTO
-        </button>
+        <div className="flex items-center gap-4">
+          <button className="hidden sm:block bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95">
+            ORÇAMENTO
+          </button>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="lg:hidden text-white hover:text-brand-yellow transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </header>
+
+      {/* Mobile Nav Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-brand-blue-dark/95 backdrop-blur-xl lg:hidden flex flex-col items-center justify-center gap-8 pt-20">
+          <nav className="flex flex-col items-center gap-8 text-xl font-bold uppercase tracking-widest text-white">
+            <a href="#home" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Início</a>
+            <a href="#diferenciais" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Diferenciais</a>
+            <a href="#sobre" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Sobre Nós</a>
+            <a href="#servicos" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Serviços</a>
+          </nav>
+          <a href="https://wa.me/5512974100008" onClick={() => setIsMobileMenuOpen(false)} className="mt-8 bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-8 py-4 rounded-full text-lg font-black transition-all hover:scale-105 active:scale-95">
+            SOLICITAR ORÇAMENTO
+          </a>
+        </div>
+      )}
 
       {/* HERO SECTION */}
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070&auto=format&fit=crop" 
+          <img
+            src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070&auto=format&fit=crop"
             alt="Construção de Luxo"
             className="w-full h-full object-cover opacity-30 scale-105"
             referrerPolicy="no-referrer"
@@ -151,24 +188,24 @@ export default function App() {
               Aparecida - SP | Capital da Fé
             </span>
           </div>
-          
-          <h1 className="hero-title font-display text-5xl md:text-8xl font-bold tracking-tight leading-[1.1] mb-8 text-white">
+
+          <h1 className="hero-title font-display text-4xl sm:text-5xl md:text-8xl font-bold tracking-tight leading-[1.1] mb-6 md:mb-8 text-white">
             DO BÁSICO AO <br />
             <span className="text-brand-yellow">ACABAMENTO</span>
           </h1>
-          
-          <p className="hero-sub text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed">
+
+          <p className="hero-sub text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed">
             Construa seus sonhos com quem faz parte da história de Aparecida há mais de 30 anos. Qualidade premium e preço imbatível para sua obra.
           </p>
-          
-          <div className="hero-cta flex flex-col md:flex-row items-center justify-center gap-4">
-            <button className="group relative bg-brand-yellow text-brand-blue px-10 py-5 rounded-full font-black text-lg flex items-center gap-3 overflow-hidden transition-all hover:pr-12">
+
+          <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+            <button className="w-full sm:w-auto group relative bg-brand-yellow text-brand-blue px-6 py-4 sm:px-10 sm:py-5 rounded-full font-black text-base sm:text-lg flex items-center justify-center gap-3 overflow-hidden transition-all hover:pr-10 sm:hover:pr-12">
               <span className="relative z-10">SOLICITAR ORÇAMENTO</span>
-              <ArrowRight className="relative z-10 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              <ArrowRight className="relative z-10 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </button>
-            <button className="px-10 py-5 rounded-full glass font-bold text-lg hover:bg-white/10 transition-all text-white">
-              VER OFERTAS
+            <button className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 rounded-full glass font-bold text-base sm:text-lg hover:bg-white/10 transition-all text-white">
+              Conheça nossa loja
             </button>
           </div>
         </div>
@@ -201,18 +238,15 @@ export default function App() {
       {/* DIFERENCIAIS (EXPANDED BENTO GRID) */}
       <section id="diferenciais" className="py-24 px-6 md:px-12 bg-brand-blue" ref={bentoRef}>
         <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6 md:gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-6 reveal text-white">
+              <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-4 md:mb-6 reveal text-white">
                 POR QUE ESCOLHER A <br />
                 <span className="text-brand-yellow">CASA BRASIL?</span>
               </h2>
-              <p className="text-white/70 text-lg reveal">
+              <p className="text-white/70 text-base md:text-lg reveal">
                 Combinamos tradição familiar com a eficiência moderna para garantir que sua obra nunca pare.
               </p>
-            </div>
-            <div className="reveal">
-              <div className="text-8xl font-display font-black text-white/10 leading-none">01</div>
             </div>
           </div>
 
@@ -249,7 +283,7 @@ export default function App() {
               <div className="w-14 h-14 bg-brand-yellow/20 rounded-2xl flex items-center justify-center mb-6 border border-brand-yellow/40">
                 <BadgePercent className="text-brand-yellow w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-display font-bold mb-4 text-white">Preços Excelentes</h3>
+              <h3 className="text-2xl font-display font-bold mb-4 text-white">Preços Imbatíveis</h3>
               <p className="text-white/80">
                 Ofertas imperdíveis em todos os setores, do básico ao acabamento fino.
               </p>
@@ -279,21 +313,21 @@ export default function App() {
 
             {/* Wide Bento Item - Price Imbatível */}
             <div className="bento-item md:col-span-12 bento-card bg-gradient-to-r from-brand-yellow/20 to-transparent border-brand-yellow/20">
-              <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
+              <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-3xl font-display font-bold mb-4 text-white">Negociação Direta</h3>
-                  <p className="text-white/70 text-lg">
+                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-4 text-white">Negociação Direta</h3>
+                  <p className="text-white/70 text-base md:text-lg">
                     Compramos em grandes volumes para garantir o melhor preço final do Vale do Paraíba para você.
                   </p>
                 </div>
-                <div className="flex gap-4">
-                  <div className="text-center px-8 py-4 glass rounded-2xl">
-                    <div className="text-4xl font-black text-brand-yellow">30+</div>
-                    <div className="text-[10px] uppercase tracking-widest text-white/60">Anos de Fé</div>
+                <div className="flex flex-wrap sm:flex-nowrap gap-4 w-full lg:w-auto">
+                  <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 md:px-8 glass rounded-2xl">
+                    <div className="text-3xl md:text-4xl font-black text-brand-yellow mb-1">30+</div>
+                    <div className="text-[10px] sm:text-xs uppercase tracking-widest text-white/60 text-center">Anos de Fé</div>
                   </div>
-                  <div className="text-center px-8 py-4 glass rounded-2xl">
-                    <div className="text-4xl font-black text-brand-yellow">10k+</div>
-                    <div className="text-[10px] uppercase tracking-widest text-white/60">Obras Realizadas</div>
+                  <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 md:px-8 glass rounded-2xl">
+                    <div className="text-3xl md:text-4xl font-black text-brand-yellow mb-1">10k+</div>
+                    <div className="text-[10px] sm:text-xs uppercase tracking-widest text-white/60 text-center">Obras Realizadas</div>
                   </div>
                 </div>
               </div>
@@ -308,22 +342,20 @@ export default function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative reveal">
               <div className="aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10">
-                <img 
-                  src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" 
+                <img
+                  src="/parceria2.jpg"
                   alt="Nossa História"
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
+                  className="partnership-img w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-8 -right-8 glass p-8 rounded-3xl hidden md:block max-w-xs">
-              <img 
-                src="https://instagram.fguj2-1.fna.fbcdn.net/v/t51.2885-19/416085363_686730583528904_1869603727862051298_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MjEuYzIifQ&_nc_ht=instagram.fguj2-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QHFvA3Cr8XMQtBIsGTX9u2IDbuH3NGGUwoxAzjpAAyd4JkBLQHFBrOMn4JD32dB2WyWzMH3uN6DN9Y8k38w-zUp&_nc_ohc=J8cqJ35Zl-8Q7kNvwFLtdfW&_nc_gid=OrI8h41R4uXYO3EAOSjLXg&edm=ADDLYBMBAAAA&ccb=7-5&oh=00_AfxCyxQJUAYp4ttIcvPo_dlosUqSRciFAHdjZf06pobyRQ&oe=69B0FB42&_nc_sid=56bdfd" 
-                alt="Casa Brasil Logo" 
-                className="h-12 w-12 rounded-xl mb-4 border border-white/10"
-                referrerPolicy="no-referrer"
-              />
-                <p className="text-brand-yellow font-display font-bold text-xl mb-2">Empresa Familiar</p>
-                <p className="text-white/80 text-sm">Mais de três décadas dedicadas à construção da nossa abençoada cidade.</p>
+              <div className="absolute -bottom-8 -right-8 bg-brand-blue-dark/95 backdrop-blur-2xl p-8 rounded-[2rem] hidden md:flex flex-col gap-4 max-w-xs border border-brand-yellow/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] reveal">
+                <div className="w-12 h-12 bg-brand-yellow/10 rounded-xl flex items-center justify-center border border-brand-yellow/20">
+                  <Users className="text-brand-yellow w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-brand-yellow font-display font-bold text-xl mb-2">Empresa Familiar</h4>
+                  <p className="text-white/90 text-sm leading-relaxed">Mais de três décadas dedicadas à construção da nossa abençoada cidade.</p>
+                </div>
               </div>
             </div>
 
@@ -336,7 +368,7 @@ export default function App() {
               <p className="text-white/70 text-lg mb-8 leading-relaxed">
                 A Casa Brasil não é apenas uma loja de materiais. Somos parte da fundação de Aparecida. Com fé e trabalho duro, transformamos cada tijolo em um lar seguro para nossos clientes.
               </p>
-              
+
               <div className="space-y-6 mb-12">
                 {[
                   { title: 'Atendimento Familiar', desc: 'Consultores especialistas que entendem sua necessidade.' },
@@ -353,9 +385,9 @@ export default function App() {
                 ))}
               </div>
 
-              <button className="flex items-center gap-4 group text-lg font-bold text-white">
-                <span className="border-b-2 border-brand-yellow pb-1 group-hover:text-brand-yellow transition-colors">CONHEÇA NOSSA HISTÓRIA</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              <button className="flex items-center gap-4 group text-base md:text-lg font-bold text-white w-full max-w-sm mt-4">
+                <span className="border-b-2 border-brand-yellow pb-1 group-hover:text-brand-yellow transition-colors whitespace-nowrap">CONHEÇA NOSSA HISTÓRIA</span>
+                <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-2 transition-transform" />
               </button>
             </div>
           </div>
@@ -375,7 +407,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { name: 'Ricardo Silva', role: 'Engenheiro Civil', text: 'A Casa Brasil é minha parceira número 1. Entrega rápida e materiais de primeira linha.' },
-              { name: 'Maria Oliveira', role: 'Proprietária', text: 'Reformar minha casa foi muito mais tranquilo com o atendimento deles. Preço justo e muita paciência.' },
+              { name: 'Maria Oliveira', role: 'Proprietária', text: 'Reformar minha casa foi muito mais tranquilo com o atendimento deles. O João sempre me responde rápido.' },
               { name: 'João Paulo', role: 'Mestre de Obras', text: 'Trabalho com eles há 15 anos. Nunca me deixaram na mão. A melhor de Aparecida e região.' }
             ].map((testi, idx) => (
               <div key={idx} className="glass p-10 rounded-[2rem] relative reveal">
@@ -397,20 +429,20 @@ export default function App() {
       {/* CTA SECTION */}
       <section className="py-24 px-6">
         <div className="container mx-auto max-w-6xl">
-          <div className="relative rounded-[3rem] overflow-hidden bg-brand-blue-dark p-12 md:p-24 text-center border border-brand-yellow/30 reveal">
+          <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-brand-blue-dark p-8 md:p-24 text-center border border-brand-yellow/30 reveal">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
             </div>
-            
+
             <div className="relative z-10 flex justify-center mb-8">
-              <img 
-                src="https://instagram.fguj2-1.fna.fbcdn.net/v/t51.2885-19/416085363_686730583528904_1869603727862051298_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MjEuYzIifQ&_nc_ht=instagram.fguj2-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QHFvA3Cr8XMQtBIsGTX9u2IDbuH3NGGUwoxAzjpAAyd4JkBLQHFBrOMn4JD32dB2WyWzMH3uN6DN9Y8k38w-zUp&_nc_ohc=J8cqJ35Zl-8Q7kNvwFLtdfW&_nc_gid=OrI8h41R4uXYO3EAOSjLXg&edm=ADDLYBMBAAAA&ccb=7-5&oh=00_AfxCyxQJUAYp4ttIcvPo_dlosUqSRciFAHdjZf06pobyRQ&oe=69B0FB42&_nc_sid=56bdfd" 
-                alt="Casa Brasil Logo" 
+              <img
+                src="/logo.jpg"
+                alt="Casa Brasil Logo"
                 className="h-20 w-20 rounded-2xl shadow-2xl border border-white/20"
                 referrerPolicy="no-referrer"
               />
             </div>
-            
+
             <h2 className="relative z-10 text-4xl md:text-7xl font-display font-black tracking-tighter mb-8 text-white">
               PRONTO PARA <br />
               <span className="text-brand-yellow">CONSTRUIR?</span>
@@ -418,16 +450,16 @@ export default function App() {
             <p className="relative z-10 text-white/80 text-xl max-w-2xl mx-auto mb-12">
               Faça seu orçamento sem compromisso agora mesmo e descubra por que somos a escolha número 1 do Vale do Paraíba.
             </p>
-            
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-6">
-              <a 
-                href="https://wa.me/5512999999999" 
-                className="w-full md:w-auto bg-brand-yellow text-brand-blue px-12 py-6 rounded-full font-black text-xl flex items-center justify-center gap-3 hover:scale-105 transition-transform"
+
+            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-6">
+              <a
+                href="https://wa.me/5512974100008"
+                className="w-full sm:w-auto bg-brand-yellow text-brand-blue px-8 py-5 md:px-12 md:py-6 rounded-full font-black text-lg md:text-xl flex items-center justify-center gap-3 hover:scale-105 transition-transform"
               >
-                <Phone className="w-6 h-6" />
+                <Phone className="w-5 h-5 md:w-6 md:h-6" />
                 WHATSAPP
               </a>
-              <div className="text-white/70 font-bold text-sm">
+              <div className="text-white/70 font-bold text-xs md:text-sm text-center sm:text-left">
                 Rua Valério Francisco, n 23, Centro <br />
                 Aparecida - SP
               </div>
@@ -441,9 +473,9 @@ export default function App() {
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-3">
-              <img 
-                src="https://instagram.fguj2-1.fna.fbcdn.net/v/t51.2885-19/416085363_686730583528904_1869603727862051298_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MjEuYzIifQ&_nc_ht=instagram.fguj2-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QHFvA3Cr8XMQtBIsGTX9u2IDbuH3NGGUwoxAzjpAAyd4JkBLQHFBrOMn4JD32dB2WyWzMH3uN6DN9Y8k38w-zUp&_nc_ohc=J8cqJ35Zl-8Q7kNvwFLtdfW&_nc_gid=OrI8h41R4uXYO3EAOSjLXg&edm=ADDLYBMBAAAA&ccb=7-5&oh=00_AfxCyxQJUAYp4ttIcvPo_dlosUqSRciFAHdjZf06pobyRQ&oe=69B0FB42&_nc_sid=56bdfd" 
-                alt="Casa Brasil Logo" 
+              <img
+                src="/logo.jpg"
+                alt="Casa Brasil Logo"
                 className="h-8 w-8 rounded-md object-cover border border-white/10"
                 referrerPolicy="no-referrer"
               />
@@ -451,8 +483,8 @@ export default function App() {
                 CASA <span className="text-brand-yellow">BRASIL</span>
               </span>
             </div>
-            
-            <div className="text-white/40 text-xs font-medium tracking-widest uppercase">
+
+            <div className="text-white/40 text-[10px] md:text-xs font-medium tracking-widest uppercase text-center md:text-left">
               © 2026 Casa Brasil Materiais para Construção. Todos os direitos reservados.
             </div>
 
