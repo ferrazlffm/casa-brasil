@@ -13,6 +13,7 @@ import {
   Clock,
   MapPin,
   Phone,
+  MessageCircle,
   ArrowRight,
   Menu,
   X,
@@ -21,7 +22,9 @@ import {
   Award,
   Users,
   BadgePercent,
-  MapPinned
+  MapPinned,
+  Facebook,
+  Instagram
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -119,30 +122,40 @@ export default function App() {
         ref={headerRef}
         className="fixed top-0 left-0 w-full z-50 glass py-4 px-6 md:px-12 flex items-center justify-between"
       >
-        <div className="flex items-center gap-3">
+        <a href="#home" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <img
             src="/logo.jpg"
             alt="Casa Brasil Logo"
             className="h-10 w-10 rounded-lg object-cover border border-white/10"
             referrerPolicy="no-referrer"
           />
-          <span className="font-display font-bold text-xl md:text-2xl tracking-tighter text-white">
-            CASA <span className="text-brand-yellow">BRASIL</span>
-          </span>
-        </div>
+          <div className="flex flex-col leading-none -space-y-0.5">
+            <span className="font-display font-bold text-xl md:text-2xl tracking-tighter text-white whitespace-nowrap">
+              CASA <span className="text-brand-yellow">BRASIL</span>
+            </span>
+            <span className="font-display text-[8px] md:text-[10px] text-white tracking-wider whitespace-nowrap">
+              Materiais para Construção
+            </span>
+          </div>
+        </a>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-white/80">
           <a href="#home" className="hover:text-brand-yellow transition-colors">Início</a>
           <a href="#diferenciais" className="hover:text-brand-yellow transition-colors">Diferenciais</a>
           <a href="#sobre" className="hover:text-brand-yellow transition-colors">Sobre Nós</a>
-          <a href="#servicos" className="hover:text-brand-yellow transition-colors">Serviços</a>
+          {/* <a href="#servicos" className="hover:text-brand-yellow transition-colors">Serviços</a> */}
         </nav>
 
         <div className="flex items-center gap-4">
-          <button className="hidden sm:block bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95">
+          <a
+            href="https://wa.me/5512974087481"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:block bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95"
+          >
             ORÇAMENTO
-          </button>
+          </a>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -161,9 +174,9 @@ export default function App() {
             <a href="#home" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Início</a>
             <a href="#diferenciais" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Diferenciais</a>
             <a href="#sobre" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Sobre Nós</a>
-            <a href="#servicos" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Serviços</a>
+            {/* <a href="#servicos" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-yellow transition-colors">Serviços</a> */}
           </nav>
-          <a href="https://wa.me/5512974100008" onClick={() => setIsMobileMenuOpen(false)} className="mt-8 bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-8 py-4 rounded-full text-lg font-black transition-all hover:scale-105 active:scale-95">
+          <a href="https://wa.me/5512974087481" onClick={() => setIsMobileMenuOpen(false)} className="mt-8 bg-brand-yellow hover:bg-brand-yellow/90 text-brand-blue px-8 py-4 rounded-full text-lg font-black transition-all hover:scale-105 active:scale-95">
             SOLICITAR ORÇAMENTO
           </a>
         </div>
@@ -185,7 +198,7 @@ export default function App() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-8 reveal">
             <span className="w-2 h-2 bg-brand-yellow rounded-full animate-pulse" />
             <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white/80">
-              Aparecida - SP | Capital da Fé
+              Aparecida - SP
             </span>
           </div>
 
@@ -199,14 +212,23 @@ export default function App() {
           </p>
 
           <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
-            <button className="w-full sm:w-auto group relative bg-brand-yellow text-brand-blue px-6 py-4 sm:px-10 sm:py-5 rounded-full font-black text-base sm:text-lg flex items-center justify-center gap-3 overflow-hidden transition-all hover:pr-10 sm:hover:pr-12">
+            <a
+              href="https://wa.me/5512974087481"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto group relative bg-brand-yellow text-brand-blue px-6 py-4 sm:px-10 sm:py-5 rounded-full font-black text-base sm:text-lg flex items-center justify-center gap-3 overflow-hidden transition-all hover:pr-10 sm:hover:pr-12"
+            >
               <span className="relative z-10">SOLICITAR ORÇAMENTO</span>
               <ArrowRight className="relative z-10 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            </button>
-            <button className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 rounded-full glass font-bold text-base sm:text-lg hover:bg-white/10 transition-all text-white">
-              Conheça nossa loja
-            </button>
+            </a>
+            <a href="https://www.instagram.com/p/CoqBhWFMYzY/"
+              target="_blank"
+              rel="noopener noreferrer">
+              <button className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 rounded-full glass font-bold text-base sm:text-lg hover:bg-white/20 hover:scale-105 active:scale-95 transition-all text-white cursor-pointer">
+                Conheça nossa loja
+              </button>
+            </a>
           </div>
         </div>
 
@@ -262,7 +284,7 @@ export default function App() {
                 </div>
                 <h3 className="text-3xl font-display font-bold mb-4 text-white">Logística de Elite</h3>
                 <p className="text-white/80 text-lg max-w-md">
-                  Entregamos em Aparecida, Guaratinguetá, Roseira e Lorena com frota própria e agilidade recorde.
+                  Entregamos em Aparecida, Guaratinguetá, Roseira, Potim, Cunha e Lorena com frota própria e agilidade recorde.
                 </p>
               </div>
             </div>
@@ -274,7 +296,7 @@ export default function App() {
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-white">Localização Central</h3>
               <p className="text-white/80">
-                Estamos no coração de Aparecida (Rua Valério Francisco, 23), facilitando seu acesso e retirada.
+                Estamos no coração de Aparecida, no centro da cidade, facilitando seu acesso e retirada.
               </p>
             </div>
 
@@ -307,7 +329,7 @@ export default function App() {
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-white">Produtos Premium</h3>
               <p className="text-white/80">
-                Trabalhamos apenas com marcas de extrema qualidade e procedência garantida.
+                Nossa experiência nos proporciona trabalhar com as melhores marcas e com procedência garantida.
               </p>
             </div>
 
@@ -315,20 +337,28 @@ export default function App() {
             <div className="bento-item md:col-span-12 bento-card bg-gradient-to-r from-brand-yellow/20 to-transparent border-brand-yellow/20">
               <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-4 text-white">Negociação Direta</h3>
+                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-4 text-white">Redes Sociais</h3>
                   <p className="text-white/70 text-base md:text-lg">
-                    Compramos em grandes volumes para garantir o melhor preço final do Vale do Paraíba para você.
+                    Siga nossas redes sociais para ficar por dentro das novidades e promoções.
                   </p>
                 </div>
-                <div className="flex flex-wrap sm:flex-nowrap gap-4 w-full lg:w-auto">
-                  <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 md:px-8 glass rounded-2xl">
-                    <div className="text-3xl md:text-4xl font-black text-brand-yellow mb-1">30+</div>
-                    <div className="text-[10px] sm:text-xs uppercase tracking-widest text-white/60 text-center">Anos de Fé</div>
-                  </div>
-                  <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 md:px-8 glass rounded-2xl">
-                    <div className="text-3xl md:text-4xl font-black text-brand-yellow mb-1">10k+</div>
-                    <div className="text-[10px] sm:text-xs uppercase tracking-widest text-white/60 text-center">Obras Realizadas</div>
-                  </div>
+                <div className="flex gap-4">
+                  <a
+                    href="https://www.instagram.com/casabrasilmateriais_aparecida/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 hover:bg-brand-yellow hover:text-brand-blue hover:scale-110 transition-all duration-300 text-white"
+                  >
+                    <Instagram size={28} />
+                  </a>
+                  <a
+                    href="https://www.facebook.com/casabrasilmateriaisparaconstrucao"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 hover:bg-brand-yellow hover:text-brand-blue hover:scale-110 transition-all duration-300 text-white"
+                  >
+                    <Facebook size={28} />
+                  </a>
                 </div>
               </div>
             </div>
@@ -343,7 +373,7 @@ export default function App() {
             <div className="relative reveal">
               <div className="aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10">
                 <img
-                  src="/parceria2.jpg"
+                  src="/img.jpg"
                   alt="Nossa História"
                   className="partnership-img w-full h-full object-cover"
                 />
@@ -385,10 +415,15 @@ export default function App() {
                 ))}
               </div>
 
-              <button className="flex items-center gap-4 group text-base md:text-lg font-bold text-white w-full max-w-sm mt-4">
-                <span className="border-b-2 border-brand-yellow pb-1 group-hover:text-brand-yellow transition-colors whitespace-nowrap">CONHEÇA NOSSA HISTÓRIA</span>
+              <a
+                href="https://www.instagram.com/p/CoqBhWFMYzY/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 group text-base md:text-lg font-bold text-white w-full max-w-sm mt-4"
+              >
+                <span className="border-b-2 border-brand-yellow pb-1 group-hover:text-brand-yellow transition-colors whitespace-nowrap">CONHEÇA NOSSA LOJA</span>
                 <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-2 transition-transform" />
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -407,7 +442,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { name: 'Ricardo Silva', role: 'Engenheiro Civil', text: 'A Casa Brasil é minha parceira número 1. Entrega rápida e materiais de primeira linha.' },
-              { name: 'Maria Oliveira', role: 'Proprietária', text: 'Reformar minha casa foi muito mais tranquilo com o atendimento deles. O João sempre me responde rápido.' },
+              { name: 'Vitor Campos', role: 'Cliente', text: 'A melhor loja da cidade e um ótimo atendimento!! 👏👏👏' },
               { name: 'João Paulo', role: 'Mestre de Obras', text: 'Trabalho com eles há 15 anos. Nunca me deixaram na mão. A melhor de Aparecida e região.' }
             ].map((testi, idx) => (
               <div key={idx} className="glass p-10 rounded-[2rem] relative reveal">
@@ -453,15 +488,18 @@ export default function App() {
 
             <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-6">
               <a
-                href="https://wa.me/5512974100008"
+                href="https://wa.me/5512974087481"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-brand-yellow text-brand-blue px-8 py-5 md:px-12 md:py-6 rounded-full font-black text-lg md:text-xl flex items-center justify-center gap-3 hover:scale-105 transition-transform"
               >
                 <Phone className="w-5 h-5 md:w-6 md:h-6" />
                 WHATSAPP
               </a>
               <div className="text-white/70 font-bold text-xs md:text-sm text-center sm:text-left">
-                Rua Valério Francisco, n 23, Centro <br />
-                Aparecida - SP
+                <span className="text-brand-yellow font-bold tracking-wider uppercase text-[10px] md:text-xs block mb-1">Horário de Funcionamento</span>
+                Segunda a Sexta das 07h às 18h <br />
+                Sábado das 07h às 13h
               </div>
             </div>
           </div>
@@ -479,18 +517,64 @@ export default function App() {
                 className="h-8 w-8 rounded-md object-cover border border-white/10"
                 referrerPolicy="no-referrer"
               />
-              <span className="font-display font-bold text-lg tracking-tighter text-white">
-                CASA <span className="text-brand-yellow">BRASIL</span>
-              </span>
+              <div className="flex flex-col leading-none -space-y-0.5">
+                <span className="font-display font-bold text-lg tracking-tighter text-white whitespace-nowrap">
+                  CASA <span className="text-brand-yellow">BRASIL</span>
+                </span>
+                <span className="font-display text-[7px] md:text-[9px] text-white tracking-wider whitespace-nowrap">
+                  Materiais para Construção
+                </span>
+              </div>
             </div>
 
             <div className="text-white/40 text-[10px] md:text-xs font-medium tracking-widest uppercase text-center md:text-left">
-              © 2026 Casa Brasil Materiais para Construção. Todos os direitos reservados.
+              © 2026 Casa Brasil - Aparecida. Todos os direitos reservados.
             </div>
 
             <div className="flex gap-6">
-              <a href="#" className="text-white/60 hover:text-brand-yellow transition-colors"><MapPin size={20} /></a>
-              <a href="#" className="text-white/60 hover:text-brand-yellow transition-colors"><Phone size={20} /></a>
+              <a
+                href="https://www.instagram.com/casabrasilmateriais_aparecida/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-brand-yellow transition-colors"
+                title="Instagram"
+              >
+                <Instagram size={20} />
+              </a>
+              <a
+                href="https://www.facebook.com/casabrasilmateriaisparaconstrucao"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-brand-yellow transition-colors"
+                title="Facebook"
+              >
+                <Facebook size={20} />
+              </a>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Rua+Valério+Francisco,+n+23,+Centro+Aparecida+-+SP"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-brand-yellow transition-colors"
+                title="Rua Valério Francisco, n 23, Centro Aparecida - SP"
+              >
+                <MapPin size={20} />
+              </a>
+              <a
+                href="tel:1231058740"
+                className="text-white/60 hover:text-brand-yellow transition-colors"
+                title="(12) 3105-8740"
+              >
+                <Phone size={20} />
+              </a>
+              <a
+                href="https://wa.me/5512974087481"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-brand-yellow transition-colors"
+                title="WhatsApp: +55 12 3105-8740"
+              >
+                <MessageCircle size={20} />
+              </a>
             </div>
           </div>
         </div>
